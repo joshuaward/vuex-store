@@ -1,0 +1,99 @@
+@mixin grid-generator($size, $grid-columns) {
+	@for $i from 1 through $grid-columns {
+		&--#{$size}#{$i} {
+			flex-basis: calc(#{percentage($i / $grid-columns)} - #{$gutter});
+		}
+
+		.g--gutter-sm &--#{$size}#{$i} {
+			flex-basis: calc(#{percentage($i / $grid-columns)} - #{$gutterSm});
+		}
+
+		.g--gutter-lg &--#{$size}#{$i} {
+			flex-basis: calc(#{percentage($i / $grid-columns)} - #{$gutterLg});
+		}
+	}
+}
+
+@mixin respond-from($size) {
+	$media: map-get($breakpoints, $size);
+	@media (min-width: $media) {
+		@content;
+	}
+}
+
+.g {
+	display: flex;
+	flex-wrap: wrap;
+	margin-right: -$gutter/2;
+	margin-left: -$gutter/2;
+	margin-top: -$gutter;
+	margin-bottom: $marginBase;
+
+	&--centered {
+		justify-content: center;
+	}
+
+	&--gutter-lg {
+		margin-right: -$gutterLg/2;
+		margin-left: -$gutterLg/2;
+		margin-top: -$gutterLg;
+	}
+
+	&--gutter-sm {
+		margin-right: -$gutterSm/2;
+		margin-left: -$gutterSm/2;
+		margin-top: -$gutterSm;
+	}
+}
+
+.g__c {
+	margin-left: $gutter/2;
+	margin-right: $gutter/2;
+	margin-top: $gutter;
+	flex-basis: 100%;
+
+	> *:last-child {
+		margin-bottom: 0;
+	}
+
+	.g--gutter-lg & {
+		margin-left: $gutterLg/2;
+		margin-right: $gutterLg/2;
+		margin-top: $gutterLg;
+	}
+
+	.g--gutter-sm & {
+		margin-left: $gutterSm/2;
+		margin-right: $gutterSm/2;
+		margin-top: $gutterSm;
+	}
+
+	.g--match-height & {
+		display: flex;
+		blue-component,
+		blue-component > span[slot] {
+			display: flex;
+			height: auto;
+			align-self: stretch;
+			flex: 1 1 100%;
+			& > * {
+				height: auto;
+				align-self: stretch;
+				flex: 1 1 100%;
+			}
+		}
+		& > * {
+			height: auto;
+			align-self: stretch;
+			flex: 1 1 100%;
+		}
+	}
+
+	@include grid-generator('', $gridColumns);
+
+	@each $name, $width in $breakpoints {
+		@include respond-from($name) {
+			@include grid-generator($name, $gridColumns);
+		}
+	}
+}

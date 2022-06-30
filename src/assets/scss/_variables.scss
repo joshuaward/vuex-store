@@ -1,0 +1,110 @@
+$rootEM: 16px !default;
+// timing 
+$base-duration: 250ms;
+
+// Colors
+$color1: #1C2321;
+$color2: #4E5166;
+$color3: #7D98A1;
+$color4: #70A9A1;
+$color5: #FCAF58;
+
+$success: #2ecc71;
+$info: #3498db;
+$warning: #f1c40f;
+$danger: #e74c3c;
+
+$white: #fff;
+$black: #000;
+$gray: #ecf0f1;
+$darkGray: #444;
+$whitesmoke: whitesmoke;
+$orange: #fab636;
+$text: #555;
+
+// Breakpoints
+$sm: 20rem;
+$med: 48rem;
+$lg: 64rem;
+
+$minWidth: 20rem !default;
+$maxWidth: 75rem !default;
+$maxWidthSm: 64rem !default;
+$gutter: 2rem !default;
+$gutterLg: 4rem !default;
+$gutterSm: 1rem !default;
+$marginBase: 1.5rem !default;
+$gridColumns: 12 !default;
+
+// fonts / icons
+$fontColorBase: $darkGray;
+$fontSizeBase: 1rem;
+$lineHeightBase: 1.3;
+$fontWeightBase: 400;
+$fontFamilyBase: 'Roboto', sans-serif;
+$fontFamilyHeadings: 'Roboto Condensed', sans-serif;
+$awesome: "Font Awesome 5 Free";
+$awesomeWeight: 900;
+
+$focusProperty: outline;
+$focusValue: 3px solid $orange;
+
+$breakpoints: (
+  xs: 0,
+	sm: 576px,
+	md: 768px,
+	lg: 992px,
+  xl: 1200px,
+	sm_dn: 575px,
+	md_dn: 767px,
+	lg_dn: 991px,
+  xl_dn: 1199px
+) !default;
+
+:root {
+  @each $bp, $value in $breakpoints {
+    --#{$bp}: #{$value};
+  }
+}
+
+html {
+  font-size: $rootEM;
+	box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-size: $fontSizeBase;
+	line-height: $lineHeightBase;
+	font-family: $fontFamilyBase;
+	font-weight: $fontWeightBase;
+	color: $fontColorBase;
+  max-width: 100%;
+  overflow-x: hidden;
+
+	&.using-mouse {
+		*:focus {
+			outline: none;
+		}
+	}
+
+	&:not(.using-mouse) {
+		*:focus {
+			outline: none;
+			#{$focusProperty}: $focusValue;
+		}
+	}
+}
+
